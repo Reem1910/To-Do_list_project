@@ -1,55 +1,77 @@
-tasks = []
+import json
+import os
+
+# File to store tasks
+TASKS_FILE = "tasks.json"
+
+# Load tasks from the file if it exists
+def load_tasks():
+    if os.path.exists(TASKS_FILE):
+        with open(TASKS_FILE, "r") as file:
+            return json.load(file)
+    return []
+
+# Save tasks to the file
+def save_tasks():
+    with open(TASKS_FILE, "w") as file:
+        json.dump(tasks, file, indent=4)
+
+# Initialize tasks (load from file at startup)
+tasks = load_tasks()
 
 def display_menu():
-    print("/n TO DO LIST MANAGER")
-    print("1.Add Task")
-    print("2.View Tasks")
-    print("3.Update Task")
-    print("4.Delete Task")
-    print("5.Exit")
+    print("\n📋 TO DO LIST MANAGER")
+    print("1️⃣  Add Task")
+    print("2️⃣  View Tasks")
+    print("3️⃣  Update Task")
+    print("4️⃣  Delete Task")
+    print("5️⃣  Exit")
 
 def add_task():
-    task = input("Add Task :")
-    tasks.append({"name":task,"completed":False})
-    print("Task was added successfully!")
+    task = input("📝 Add Task: ")
+    tasks.append({"name": task, "completed": False})
+    save_tasks()
+    print("✅ Task added successfully!")
 
 def view_tasks():
     if not tasks:
-        print("there is not any tasks!")
+        print("⚠️ No tasks available!")
     else:
+        print("\n📌 Task List:")
         for i, task in enumerate(tasks):
-            status = "✓" if task["completed"] else "✗"
-            print (f"{i+1}.{task["name"]}[{status}]")
+            status = "✅" if task["completed"] else "❌"
+            print(f"{i+1}. {task['name']} [{status}]")
 
 def update_task():
     view_tasks()
     try:
-        task_number = int(input("Choose the task's number for update :"))
+        task_number = int(input("🔄 Choose task number to update: ")) - 1
         if 0 <= task_number < len(tasks):
             tasks[task_number]["completed"] = not tasks[task_number]["completed"]
-            print("The Task Was Updated Successfully!")
+            save_tasks()
+            print("✅ Task updated successfully!")
         else:
-            print("Invalid number!")
-    except ValueError :
-        print("Please enter a valid number!")
+            print("❌ Invalid number!")
+    except ValueError:
+        print("⚠️ Please enter a valid number!")
 
 def delete_task():
     view_tasks()
     try:
-        task_number = int(input("Choose the task's number to delete : ")) -1
-        if 0 <= task_number < len(tasks) :
+        task_number = int(input("🗑️ Choose task number to delete: ")) - 1
+        if 0 <= task_number < len(tasks):
             tasks.pop(task_number)
-            print("The task was deleted!")
+            save_tasks()
+            print("🗑️ Task deleted successfully!")
         else:
-            print("Invalid number!")
-    except ValueError :
-        print("Please enter a valid number!")
+            print("❌ Invalid number!")
+    except ValueError:
+        print("⚠️ Please enter a valid number!")
 
-#project implementation:
-
+# Run the To-Do List Manager
 while True:
     display_menu()
-    choice = input("Choose the task's no : ")
+    choice = input("🔢 Choose an option: ")
     
     if choice == "1":
         add_task()
@@ -60,7 +82,7 @@ while True:
     elif choice == "4":
         delete_task()
     elif choice == "5":
-        print("Good Bye!")
+        print("👋 Goodbye!")
         break
     else:
-        print("wrong choice")
+        print("⚠️ Invalid choice, please try again!")
