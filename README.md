@@ -1,6 +1,19 @@
+
 To-Do List Manager
 
 To-Do List Manager is a simple task management application using Python. This application allows you to add tasks, view them, update their status, and delete them easily via a command-line interface (CLI).
+
+# To-Do List Project
+A simple Python-based To-Do List app, now containerized with Docker.
+
+## How to Run with Docker
+1. Clone this repository.
+2. Run `docker build -t to-do-list-app .` to build the image.
+3. Run `docker run -d -p 5000:5000 to-do-list-app` to start the container.
+4. Open `http://localhost:5000` in your browser (if it's a web app).
+
+## Purpose
+This project was created to practice Python programming and later containerized to enhance my DevOps skills with Docker.
 
 Features ✨
 
@@ -83,4 +96,6 @@ License 📄
 This project is licensed under the MIT License, which means you can freely use it with proper attribution.
 
 📌 This project was developed for educational and experimental purposes, and we welcome your suggestions and improvements! 😊
+
+
 
